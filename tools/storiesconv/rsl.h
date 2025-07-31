@@ -376,7 +376,7 @@ struct sPspGeometry {
 	uint32  flags;		// PSP VTYPE
 	uint32  numStrips;
 	uint32  unk1;		// 0?
-	float32 bound[4];	// ???
+	float32 boundAABB[4];	// bound AABB for PSP/Mobile
 	float32 scale[3];
 	int32   numVerts;
 	float32 pos[3];
@@ -393,7 +393,7 @@ struct sPspGeometryMesh {
 	// This is less certain
 	float32 unk1;		// ??
 	float32 uvScale[2];	// ?
-	float32 unk2[4];	// ??
+	float32 uvClip[4];	// UV clip - U_min, V_min, U_max, V_max coordinates (0.0 to 1.0)
 	float32 unk3;		// ??
 
 	uint8 bonemap[8];
