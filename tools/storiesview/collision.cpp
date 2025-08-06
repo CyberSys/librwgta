@@ -110,7 +110,7 @@ LoadCollisionFile(int id, uint8 *data)
 		return;
 	chunk = rwNewT(uint8, header->fileSize, 0);
 	memcpy(chunk, data, header->fileSize);
-	cReloctableChunk(header->ident, header->shrink).Fixup(chunk);
+	cRelocatableChunk(header->ident, header->shrink).Fixup(chunk);
 
 	pColPool->items[id].chunkData = chunk;
 	CBaseModelInfo *mi;

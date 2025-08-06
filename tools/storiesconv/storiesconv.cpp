@@ -1426,7 +1426,7 @@ main(int argc, char *argv[])
 		uint8 *data = (uint8*)malloc(header.fileSize-sizeof(sChunkHeader));
 		stream.read8(data, header.fileSize-sizeof(sChunkHeader));
 		stream.close();
-		cReloctableChunk(header.ident, header.shrink).Fixup(header, data);
+		cRelocatableChunk(header.ident, header.shrink).Fixup(header, data);
 
 		if(header.ident == GTAG_IDENT)
 			gamedata = (ResourceImage*)data;
@@ -1440,7 +1440,7 @@ main(int argc, char *argv[])
 	data = (uint8*)malloc(header.fileSize-sizeof(sChunkHeader));
 	stream.read8(data, header.fileSize-sizeof(sChunkHeader));
 	stream.close();
-	cReloctableChunk(header.ident, header.shrink).Fixup(header, data);
+	cRelocatableChunk(header.ident, header.shrink).Fixup(header, data);
 
 	bool32 largefile;
 	largefile = header.dataSize > 4*1024*1024;

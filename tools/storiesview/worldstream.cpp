@@ -79,7 +79,7 @@ LoadLevel(eLevel lev)
 	uint8 *data = (uint8*)malloc(header.fileSize-sizeof(sChunkHeader));
 	zread(zfile, data, header.fileSize-sizeof(sChunkHeader));
 	zclose(zfile);
-	cReloctableChunk(header.ident, header.shrink).Fixup(header, data);
+	cRelocatableChunk(header.ident, header.shrink).Fixup(header, data);
 	gLevel = new LevelExt;
 	memset(gLevel, 0, sizeof(LevelExt));
 	gLevel->chunk = (sLevelChunk*)data;
@@ -190,7 +190,7 @@ LoadSector(int n, int interior)
 	uint8 *s = (uint8*)malloc(pheader->fileSize-sizeof(sChunkHeader));
 	fseek(gLevel->imgfile, pheader->globalTab, SEEK_SET);
 	fread(s, 1, pheader->fileSize-sizeof(sChunkHeader), gLevel->imgfile);
-	cReloctableChunk(pheader->ident, pheader->shrink).Fixup(*pheader, s);
+	cRelocatableChunk(pheader->ident, pheader->shrink).Fixup(*pheader, s);
 
 	SectorExt *se = &gLevel->sectors[n];
 	se->sect = (Sector*)s;
@@ -256,7 +256,7 @@ LoadArea(int n)
 	fseek(gLevel->imgfile, ai->fileOffset, SEEK_SET);
 	fread(data, 1, ai->fileSize, gLevel->imgfile);
 	sChunkHeader *header = (sChunkHeader*)data;
-	cReloctableChunk(header->ident, header->shrink).Fixup(data);
+	cRelocatableChunk(header->ident, header->shrink).Fixup(data);
 
 	Area *a = (Area*)(header+1);
 	gLevel->areas[n] = a;

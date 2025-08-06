@@ -546,7 +546,7 @@ found:
 	uint8 *data = (uint8*)malloc(header.fileSize-sizeof(sChunkHeader));
 	zread(zfile, data, header.fileSize-sizeof(sChunkHeader));
 	zclose(zfile);
-	cReloctableChunk(header.ident, header.shrink).Fixup(header, data);
+	cRelocatableChunk(header.ident, header.shrink).Fixup(header, data);
 
 	ResourceImage *resimg = (ResourceImage*)data;
 	pBuildingPool = (BuildingPool*)resimg->buildingPool;

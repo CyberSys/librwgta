@@ -376,12 +376,12 @@ struct sPspGeometry {
 	uint32  flags;		// PSP VTYPE
 	uint32  numStrips;
 	uint32  unk1;		// 0?
-	float32 bound[4];	// ???
+	float32 bound[4];	// bound AABB for PSP/Mobile
 	float32 scale[3];
 	int32   numVerts;
 	float32 pos[3];
 	int32   unk2;
-	uint32  offset;		// from beginning of struct to vertices
+	uint32  offset;		// from beginning of geometry struct to vertices
 	float32 unk3;
 };
 static_assert(sizeof(sPspGeometry) == 0x48, "sPspGeometry: error");
@@ -392,24 +392,23 @@ struct sPspGeometryMesh {
 	uint16  matID;
 	// This is less certain
 	float32 unk1;		// ??
-	float32 uvScale[2];	// ?
-	float32 unk2[4];	// ??
+	float32 uvScale[2];	// scale for u and v
+	float32 uvClip[4];	// UV clip - U_min, V_min, U_max, V_max coordinates (0.0 to 1.0)
 	float32 unk3;		// ??
 
 	uint8 bonemap[8];
 };
 static_assert(sizeof(sPspGeometryMesh) == 0x30, "sPspGeometryMesh: error");
 
- // sPspGeometry but should be sPs2Geometry obviously...
 struct sPs2Geometry {
 	float32 bound[4];
 	uint32  size;		// and numMeshes
 	int32   flags;
-	uint16  numVerts;	// according to gtamodding.ru
+	uint16  numVerts;	// how many verts total
 	uint16  dmaOffset;	// offset from beginning of struct to DMA data
-	uint16  boundBox[6];	// according to gtamodding.ru
-	float32 scale[3];
-	float32 pos[3];
+	uint16  boundBox[6];	// bounding box minimum/maximum
+	float32 scale[3];		// mesh/part scale
+	float32 pos[3];			// mesh/part XYZ
 };
 
 struct sPs2GeometryMesh {
@@ -417,8 +416,8 @@ struct sPs2GeometryMesh {
 	float32  uvScale[2];
 	int32    unknown;	// has to do with the raster, see 0x39FA8C in VCS SLES file
 	uint32   dmaPacket;
-	uint16   numTriangles;
-	int16    matID;
-	float16  min[3];          // bounding box
+	uint16   numTriangles;    // number of triangles this mesh/part has
+	int16    matID;			  // material ID's for mesh/part
+	float16  min[3];          // bounding box minimum/maximum
 	float16  max[3];
 };

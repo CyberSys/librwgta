@@ -12,13 +12,13 @@ struct sChunkHeader
 	uint16   numFuncs;
 };
 
-class cReloctableChunk
+class cRelocatableChunk
 {
 public:
 	uint32	ident;
 	bool32	shrink;
 
-	cReloctableChunk(uint32 ident, bool32 shrink) : ident(ident), shrink(shrink) { }
+	cRelocatableChunk(uint32 ident, bool32 shrink) : ident(ident), shrink(shrink) { }
 	void Fixup(sChunkHeader &header, void *data);
 	void Fixup(void *data);
 	void *Shrink(sChunkHeader &header, void *data);
